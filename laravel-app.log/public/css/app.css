@@ -1,0 +1,17 @@
+.container{
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    max-width: 80%;
+    margin-left: 10%;
+}
+html, body{
+    padding: 0px;
+    margin: 0px;
+}
+.cv-main-section{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
