@@ -1,4 +1,6 @@
- <table class="border-spacing-px border-collapse text-amber-700	">
+@vite(['resources/css/app.css',
+'resources/js/app.js'])
+<table class="border-spacing-px border-collapse">
         <tr>
             <th>id</th>
             <th>name</th>
