@@ -1,4 +1,4 @@
- <table border="1px solid">
+ <table class="border-spacing-px border-collapse text-amber-700	">
         <tr>
             <th>id</th>
             <th>name</th>
@@ -19,7 +19,7 @@
 {{-- При натисканні--}}
 {{-- відповідної кнопки показати тільки товари, ціна яких не перевищує--}}
 {{-- максимальну. Валідувати введені дані.--}}
-<form method="post" >
+<form method="get" action="{{URL::to('goods')}}" enctype="application/x-www-form-urlencoded">
     @csrf
     <input type="number" placeholder="Type a number" name="price">
     <input type="submit">

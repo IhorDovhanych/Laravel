@@ -9,12 +9,14 @@ use Illuminate\View\View;
 
 class GoodsController extends Controller
 {
-    public function index():View{
-        $goods = Goods::all();
-        return view('goods.index', ['goods' => $goods]);
-    }
-    public function store(int $price):View{
-        $goods = DB::table('goods')->whereRaw('price > ?', $price)->get();
+    public function index(Request $request):View{
+        if(!$request->query->get('price')){
+            $goods = Goods::all();
+        }
+        else{
+            $goods = Goods::whereRaw('price < ?', $request->query->get('price'))->get();
+        }
+
         return view('goods.index', ['goods' => $goods]);
     }
 }
