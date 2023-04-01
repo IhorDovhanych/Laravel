@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\CandidatesController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,10 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/cv/{name}', function (string $name) {
-    return view('cv', ['name' => $name]);
-});
+//Route::get('/', function () {
+//    return view('layouts.candidates');
+//});
+Route::resource('/candidates', CandidatesController::class);
