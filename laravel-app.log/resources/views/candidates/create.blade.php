@@ -22,7 +22,7 @@
     <input type="text" required name="specialization">
     <br/>
     <label for="vacancy_list">Vacancy:</label>
-    <input type="text" required name="vacancy_list">
+    <input type="text" required name="vacancy_id">
     <br/>
     <input type="submit">
 </form>

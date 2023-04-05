@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Candidate;
+use App\Models\Vacancy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -17,7 +18,8 @@ class CandidatesController extends Controller
     public function index()
     {
         $candidates = Candidate::all();
-        return view('candidates.index', ['candidates' => $candidates]);
+        $vacancies = Vacancy::all();
+        return view('candidates.index', ['candidates' => $candidates, 'vacancies' => $vacancies]);
     }
 
     /**
@@ -45,7 +47,7 @@ class CandidatesController extends Controller
             'birth_year' => $request->input('birth_year'),
             'education' => $request->input('education'),
             'specialization' => $request->input('specialization'),
-            'vacancy_list' => $request->input('vacancy_list')
+            'vacancy_id' => $request->input('vacancy_id')
         ]);
         return redirect(route('candidates.index'));
     }
@@ -88,7 +90,7 @@ class CandidatesController extends Controller
             'birth_year' => $request->input('birth_year'),
             'education' => $request->input('education'),
             'specialization' => $request->input('specialization'),
-            'vacancy_list' => $request->input('vacancy_list')
+            'vacancy_id' => $request->input('vacancy_id')
         ]);
         return redirect(route('candidates.index'));
     }

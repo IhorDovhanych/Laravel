@@ -18,7 +18,7 @@ class Candidate extends Model
         'birth_year',
         'education',
         'specialization',
-        'vacancy_list'
+        'vacancy_id'
     ];
 
     public function vacancies() : HasMany

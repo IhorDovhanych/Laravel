@@ -30,7 +30,7 @@
     <input type="text" required name="specialization" value="{{$candidate->specialization}}">
     <br/>
     <label for="vacancy_list">Vacancy:</label>
-    <input type="text" required name="vacancy_list" value="{{$candidate->vacancy_list}}">
+    <input type="text" required name="vacancy_id" value="{{$candidate->vacancy_id}}">
     <br/>
     <input type="submit">
 </form>

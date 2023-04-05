@@ -20,7 +20,13 @@
             <td>{{$candidate->birth_year}}</td>
             <td>{{$candidate->education}}</td>
             <td>{{$candidate->specialization}}</td>
-            <td>{{$candidate->vacancy_list}}</td>
+            <td>
+                @foreach($vacancies as $vacancy)
+                    @if($vacancy->id == $candidate->vacancy_id)
+                        {{$vacancy->company_name}}
+                    @endif
+                @endforeach
+            </td>
             <td>
                 <a href="{{route('candidates.edit', $candidate)}}">
                     <button>

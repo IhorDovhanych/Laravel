@@ -16,4 +16,5 @@ use App\Http\Controllers\CandidatesController;
 //Route::get('/', function () {
 //    return view('layouts.candidates');
 //});
+Route::redirect('/', '/candidates');
 Route::resource('/candidates', CandidatesController::class);
