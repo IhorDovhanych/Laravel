@@ -7,6 +7,7 @@ use App\Models\Vacancy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use App\Http\Requests\CandidateRequest;
 
 class CandidatesController extends Controller
 {
@@ -38,20 +39,20 @@ class CandidatesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request): RedirectResponse
+    public function store(CandidateRequest $request): RedirectResponse
     {
+        $validatedCandidate = $request->validate($request->rules());
         $candidate = Candidate::create([
-            'first_name' => $request->input('first_name'),
-            'last_name' => $request->input('last_name'),
-            'gender' => $request->input('gender'),
-            'birth_year' => $request->input('birth_year'),
-            'education' => $request->input('education'),
-            'specialization' => $request->input('specialization'),
-            'vacancy_id' => $request->input('vacancy_id')
+            'first_name' => $validatedCandidate['first_name'],
+            'last_name' => $validatedCandidate['last_name'],
+            'gender' => $validatedCandidate['gender'],
+            'birth_year' => $validatedCandidate['birth_year'],
+            'education' => $validatedCandidate['education'],
+            'specialization' => $validatedCandidate['specialization'],
+            'vacancy_id' => $validatedCandidate['vacancy_id']
         ]);
         return redirect(route('candidates.index'));
     }
-
     /**
      * Display the specified resource.
      *
@@ -81,16 +82,17 @@ class CandidatesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Candidate $candidate)
+    public function update(CandidateRequest $request, Candidate $candidate)
     {
+        $validatedCandidate = $request->validate($request->rules());
         $candidate->update([
-            'first_name' => $request->input('first_name'),
-            'last_name' => $request->input('last_name'),
-            'gender' => $request->input('gender'),
-            'birth_year' => $request->input('birth_year'),
-            'education' => $request->input('education'),
-            'specialization' => $request->input('specialization'),
-            'vacancy_id' => $request->input('vacancy_id')
+            'first_name' => $validatedCandidate['first_name'],
+            'last_name' => $validatedCandidate['last_name'],
+            'gender' => $validatedCandidate['gender'],
+            'birth_year' => $validatedCandidate['birth_year'],
+            'education' => $validatedCandidate['education'],
+            'specialization' => $validatedCandidate['specialization'],
+            'vacancy_id' => $validatedCandidate['vacancy_id']
         ]);
         return redirect(route('candidates.index'));
     }
