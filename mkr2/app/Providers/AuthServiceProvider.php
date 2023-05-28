@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Providers;
-
-// use Illuminate\Support\Facades\Gate;
+use App\Models\Student;
+use App\Models\User;
+use App\Policies\StudentPolicy;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -13,7 +15,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        //
+        Student::class => StudentPolicy::class,
     ];
 
     /**
@@ -21,6 +23,14 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Gate::define('delete-post', function (User $user) {
+            return $user['role'] == 'admin' ||  $user['role'] == 'superadmin';
+        });
+        Gate::define('update-post', function (User $user) {
+            return $user['role'] == 'admin' || $user['role'] == 'superadmin';
+        });
+//        if (! Gate::allows('delete-post')) {
+//            abort(403, "Not allowed by gate");
+//        }
     }
 }
