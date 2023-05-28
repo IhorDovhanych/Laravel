@@ -14,7 +14,7 @@
                     <section class=" flex flex-col p-5 m-5 rounded-md">
                         <form action="{{ route('student.store')}}" method="POST">
                             @csrf
-                            {{ method_field('PUT') }}
+                            {{ method_field('POST') }}
                             <div class="grid gap-6 mb-6 md:grid-cols-2">
                             <div>
                                 <h3 class="text-2xl flex-nowrap flex flex-row">

@@ -32,7 +32,7 @@ class GradeController extends Controller
         return view('pages.grades.index', compact('students'))->with('user', $request->user());
     }
     public function destroy(Request $request, $id){
-        Gate::authorize('delete-post');
+        Gate::authorize('delete-post', [$this->findById(Grade::all(), $id)]);
         if(
             $request->user()['role'] == 'admin' ||
             $request->user()['role'] == 'superAdmin'
@@ -44,28 +44,22 @@ class GradeController extends Controller
     }
     public function edit(Request $request, $id)
     {
-        Gate::authorize('update-post');
+        $grades = Grade::all();
+        $grade = $this->findById($grades, $id);
         if (
-            $request->user()['role'] == 'admin' ||
-            $request->user()['role'] == 'superAdmin'||
-            $request->user()['role'] == 'editor'
+            Gate::authorize('update-post', [$grade])
         ) {
-            $grades = Grade::all();
-            $grade = $this->findById($grades, $id);
             return \view('pages.grades.edit', ['grade' => $grade]);
         }
         return \redirect()->back()->with('error', "You don't have permissions");
     }
     public function update(GradeRequest $request,$id){
-        Gate::authorize('update-post');
+        $validatedGrade = $request->validate($request->rules());
+        $grades = Grade::all();
+        $grade = $this->findById($grades, $id);
         if (
-            $request->user()['role'] == 'admin' ||
-            $request->user()['role'] == 'superAdmin' ||
-            $request->user()['role'] == 'editor'
+            Gate::authorize('update-post', [$grade])
         ) {
-            $validatedGrade = $request->validate($request->rules());
-            $grades = Grade::all();
-            $grade = $this->findById($grades, $id);
             $grade->update([
                 'lesson_name' => $validatedGrade['lesson_name'],
                 'grade' => $validatedGrade['grade'],
@@ -80,17 +74,19 @@ class GradeController extends Controller
         Gate::authorize('create-post');
         if (
             $request->user()['role'] == 'admin' ||
-            $request->user()['role'] == 'superAdmin'
+            $request->user()['role'] == 'superAdmin'||
+            $request->user()['role'] == 'editor'
         ) {
         return \view('pages.grades.create');
         }
         return \redirect()->back()->with('error', "You don't have permissions");
     }
     public function store(GradeRequest $request){
-        Gate::authorize('create-post');
+        //Gate::authorize('create-post');
         if (
             $request->user()['role'] == 'admin' ||
-            $request->user()['role'] == 'superAdmin'
+            $request->user()['role'] == 'superAdmin' ||
+            $request->user()['role'] == 'editor'
         ) {
             $validatedGrade = $request->validate($request->rules());
             $grade = Grade::create([
@@ -98,6 +94,7 @@ class GradeController extends Controller
                 'grade' => $validatedGrade['grade'],
                 'grade_date' => $validatedGrade['grade_date'],
                 'student_id' => $validatedGrade['student_id'],
+                'editor_id' => $request->user()->id
             ]);
             return \redirect(route('grades'));
         }

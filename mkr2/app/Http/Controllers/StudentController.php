@@ -17,7 +17,6 @@ class StudentController extends Controller
         }
     }
     public function create(Request $request){
-        Gate::authorize('create-post');
         if (
             $request->user()['role'] == 'admin' ||
             $request->user()['role'] == 'superAdmin'
@@ -27,7 +26,6 @@ class StudentController extends Controller
         return \redirect()->back()->with('error', "You don't have permissions");
     }
     public function store(StudentRequest $request){
-        Gate::authorize('create-post');
         if (
             $request->user()['role'] == 'admin' ||
             $request->user()['role'] == 'superAdmin'
@@ -38,12 +36,13 @@ class StudentController extends Controller
                 'course' => $validatedGrade['course'],
                 'specialization' => $validatedGrade['specialization']
             ]);
+            Gate::authorize('create-post', $student);
             return \redirect(route('grades'));
         }
         return \redirect()->back()->with('error', "You don't have permissions");
     }
+
     public function destroy(Request $request, $id){
-        Gate::authorize('delete-post');
         if(
             $request->user()['role'] == 'admin' ||
             $request->user()['role'] == 'superAdmin'
@@ -54,7 +53,6 @@ class StudentController extends Controller
         return \redirect()->back()->with('error', "You don't have permissions");
     }
     public function edit(Request $request, $id){
-        Gate::authorize('update-post');
         if(
             $request->user()['role'] == 'admin' ||
             $request->user()['role'] == 'superAdmin'||
@@ -67,7 +65,6 @@ class StudentController extends Controller
         return \redirect()->back()->with('error', "You don't have permissions");
     }
     public function update(StudentRequest $request,$id){
-        Gate::authorize('update-post');
         if (
             $request->user()['role'] == 'admin' ||
             $request->user()['role'] == 'superAdmin' ||

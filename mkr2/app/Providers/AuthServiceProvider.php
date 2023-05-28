@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Providers;
+use App\Models\Grade;
 use App\Models\Student;
 use App\Models\User;
 use App\Policies\UserPolicy;
@@ -23,11 +24,11 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Gate::define('delete-post', function (User $user) {
-            return $user['role'] == 'admin' ||  $user['role'] == 'superAdmin';
+        Gate::define('delete-post', function (User $user, ?Grade $grade) {
+            return $user['role'] == 'admin' ||  $user['role'] == 'superAdmin' || $user->id == $grade->editor_id;
         });
-        Gate::define('update-post', function (User $user) {
-            return $user['role'] == 'admin' || $user['role'] == 'superAdmin' || $user['role'] == 'editor';
+        Gate::define('update-post', function (User $user, ?Grade $grade) {
+            return $user['role'] == 'admin' || $user['role'] == 'superAdmin' || $user['role'] == 'editor' || $user['id'] == $grade['editor_id'];
         });
         Gate::define('create-post', function (User $user) {
             return $user['role'] == 'admin' || $user['role'] == 'superAdmin' || $user['role'] == 'editor';

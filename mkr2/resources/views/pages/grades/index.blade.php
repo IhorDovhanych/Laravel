@@ -78,7 +78,7 @@
 {{--///////////////////////////////////////////////////////--}}
 
     <div class="py-12">
-        @if($user->role == 'admin' || $user->role == 'superAdmin')
+        @if($user->role == 'admin' || $user->role == 'superAdmin' || $user->role == 'editor')
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mb-3">
                  <div class="flex inline-flex mb-2 w-full" style="align-items: center; justify-content: flex-end">
                     <p class="font-bold mr-2">
@@ -156,7 +156,7 @@
                                                         <p class="mr-2" style="white-space: nowrap; width: 120px">
                                                             Grade: {{$grade['grade']}}
                                                         </p>
-                                                        @if($user->role == 'admin' || $user->role == 'superAdmin' || $user->role == 'editor')
+                                                        @if($user->role == 'admin' || $user->role == 'superAdmin' || $user->role == 'editor' || $user->id == $grade->editor_id)
                                                             <form action="{{ route('grade.edit', ['id' => $grade['id']])}}" method="POST">
                                                                 @csrf
                                                                 @method('GET')
