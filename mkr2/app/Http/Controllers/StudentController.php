@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StudentRequest;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class StudentController extends Controller
 {
@@ -16,6 +17,7 @@ class StudentController extends Controller
         }
     }
     public function create(Request $request){
+        Gate::authorize('create-post');
         if (
             $request->user()['role'] == 'admin' ||
             $request->user()['role'] == 'superAdmin'
@@ -25,6 +27,7 @@ class StudentController extends Controller
         return \redirect()->back()->with('error', "You don't have permissions");
     }
     public function store(StudentRequest $request){
+        Gate::authorize('create-post');
         if (
             $request->user()['role'] == 'admin' ||
             $request->user()['role'] == 'superAdmin'
@@ -40,6 +43,7 @@ class StudentController extends Controller
         return \redirect()->back()->with('error', "You don't have permissions");
     }
     public function destroy(Request $request, $id){
+        Gate::authorize('delete-post');
         if(
             $request->user()['role'] == 'admin' ||
             $request->user()['role'] == 'superAdmin'
@@ -49,8 +53,8 @@ class StudentController extends Controller
         }
         return \redirect()->back()->with('error', "You don't have permissions");
     }
-    public function edit(Request $request, $id)
-    {
+    public function edit(Request $request, $id){
+        Gate::authorize('update-post');
         if(
             $request->user()['role'] == 'admin' ||
             $request->user()['role'] == 'superAdmin'||
@@ -63,6 +67,7 @@ class StudentController extends Controller
         return \redirect()->back()->with('error', "You don't have permissions");
     }
     public function update(StudentRequest $request,$id){
+        Gate::authorize('update-post');
         if (
             $request->user()['role'] == 'admin' ||
             $request->user()['role'] == 'superAdmin' ||

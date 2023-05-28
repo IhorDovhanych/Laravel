@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Grade;
 use App\Models\Student;
 use App\Http\Requests\GradeRequest;
+use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 
 
@@ -30,6 +32,7 @@ class GradeController extends Controller
         return view('pages.grades.index', compact('students'))->with('user', $request->user());
     }
     public function destroy(Request $request, $id){
+        Gate::authorize('delete-post');
         if(
             $request->user()['role'] == 'admin' ||
             $request->user()['role'] == 'superAdmin'
@@ -41,6 +44,7 @@ class GradeController extends Controller
     }
     public function edit(Request $request, $id)
     {
+        Gate::authorize('update-post');
         if (
             $request->user()['role'] == 'admin' ||
             $request->user()['role'] == 'superAdmin'||
@@ -53,6 +57,7 @@ class GradeController extends Controller
         return \redirect()->back()->with('error', "You don't have permissions");
     }
     public function update(GradeRequest $request,$id){
+        Gate::authorize('update-post');
         if (
             $request->user()['role'] == 'admin' ||
             $request->user()['role'] == 'superAdmin' ||
@@ -72,6 +77,7 @@ class GradeController extends Controller
         return \redirect()->back()->with('error', "You don't have permissions");
     }
     public function create(Request $request){
+        Gate::authorize('create-post');
         if (
             $request->user()['role'] == 'admin' ||
             $request->user()['role'] == 'superAdmin'
@@ -81,6 +87,7 @@ class GradeController extends Controller
         return \redirect()->back()->with('error', "You don't have permissions");
     }
     public function store(GradeRequest $request){
+        Gate::authorize('create-post');
         if (
             $request->user()['role'] == 'admin' ||
             $request->user()['role'] == 'superAdmin'
