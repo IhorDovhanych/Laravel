@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApiTokenController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SearchByIdFormController;
 use App\Http\Controllers\GradeController;
@@ -61,4 +62,6 @@ Route::middleware('auth')->group(function () {
 });
 Route::post('/search/by/id/submit', [SearchByIdFormController::class, 'submit'])->name('search.by.id.form.submit');
 
+Route::get('token/update', [ApiTokenController::class,
+    'update'])->middleware('auth')->name('update_token');
 require __DIR__.'/auth.php';
