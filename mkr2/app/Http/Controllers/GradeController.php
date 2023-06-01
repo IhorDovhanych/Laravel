@@ -71,22 +71,17 @@ class GradeController extends Controller
         return \redirect()->back()->with('error', "You don't have permissions");
     }
     public function create(Request $request){
-        Gate::authorize('create-post');
+
         if (
-            $request->user()['role'] == 'admin' ||
-            $request->user()['role'] == 'superAdmin'||
-            $request->user()['role'] == 'editor'
+            Gate::authorize('create-post')
         ) {
         return \view('pages.grades.create');
         }
         return \redirect()->back()->with('error', "You don't have permissions");
     }
     public function store(GradeRequest $request){
-        //Gate::authorize('create-post');
         if (
-            $request->user()['role'] == 'admin' ||
-            $request->user()['role'] == 'superAdmin' ||
-            $request->user()['role'] == 'editor'
+            Gate::authorize('create-post')
         ) {
             $validatedGrade = $request->validate($request->rules());
             $grade = Grade::create([

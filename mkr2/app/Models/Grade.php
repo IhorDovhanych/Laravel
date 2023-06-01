@@ -17,8 +17,11 @@ class Grade extends Model
         'grade_date',
         'student_id',
     ];
+    protected $casts = [
+        'grade_date' => 'date'
+    ];
     public function student()
     {
-        return $this->belongsTo(Student::class, 'journal_id', 'id');
+        return $this->belongsTo(Student::class, 'student_id', 'id');
     }
 }
